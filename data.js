@@ -778,8 +778,57 @@ const TOPICS = [
 ];
 
 
-/* Slajdovi predavanja (galerija) — generisano */
-const SLIDE_SLUG = {eh:"energyharvesting-2026",fsr:"fsr2026",mag:"magnetskimaterijali2026",kuc:"materijalizakucista2026",piezo:"piezoelektrici-2026",qtc:"qtc-2026",sma:"sma-2026",sol:"solarne-celije-2026",term:"termistori-2026",var:"varistori-2026"};
-const SLIDE_COUNT = {eh:59,fsr:37,mag:21,kuc:25,piezo:8,qtc:15,sma:25,sol:32,term:12,var:20};
-TOPICS.forEach(t=>{const s=SLIDE_SLUG[t.id],n=SLIDE_COUNT[t.id];
-  if(s&&n)t.slides=Array.from({length:n},(_,i)=>`slides/${s}/p${String(i+1).padStart(3,"0")}.jpg`);});
+/* Figure po sekciji (prave slike sa slajdova, u kontekstu) — generisano */
+const _fig=(s,c)=>`<figure class="figure"><img src="${s}" alt="${c}"><figcaption>${c}</figcaption></figure>`;
+const FIGS = {
+  eh:{
+    "Izvori energije i pretvarači":[_fig("img/eh/p009.jpg","Nekonvencionalni izvori: svetlost, toplota, vibracije, RF.")],
+    "Prototip — uređaj na kolenu (primer)":[_fig("img/eh/p044.jpg","Knee harvester — pokret kolena pokreće generator (4.8 W).")]
+  },
+  fsr:{
+    "Princip rada":[_fig("img/fsr/p005.jpg","Otpornost naglo opada sa porastom sile (nelinearno).")],
+    "Struktura (kako je napravljen)":[_fig("img/fsr/p008.jpg","FSR senzori raznih oblika.")],
+    "Vezivanje u kolo":[_fig("img/fsr/p012.jpg","Osnovno kolo — razdelnik napona sa baferom.")],
+    "Primene":[_fig("img/fsr/p034.jpg","FSR u patiki — merenje pritiska stopala i analiza hoda.")]
+  },
+  mag:{
+    "Magnetno MEKI vs TVRDI":[_fig("img/mag/p004.jpg","Histerezisna petlja B(H).")],
+    "Histerezisni proces":[_fig("img/mag/p007.jpg","Histerezisni proces sa orijentacijom domena.")],
+    "Primene":[_fig("img/mag/p011.jpg","Feritna jezgra raznih oblika.")]
+  },
+  kuc:{
+    "Hijerarhijski nivoi povezivanja":[_fig("img/kuc/p006.jpg","Nivoi: čip → kućište → PCB → matična ploča.")],
+    "Tipovi montaže čipa":[_fig("img/kuc/p008.jpg","Primeri kućišta (DIP, TO, komponente).")],
+    "Materijali i RoHS":[_fig("img/kuc/p020.jpg","RoHS — bez olova (lead-free).")]
+  },
+  piezo:{
+    "Princip rada":[_fig("img/piezo/p001.jpg","Direktni efekat (sila→napon) i inverzni (napon→deformacija).")],
+    "Piezo senzori — ključna osobina":[_fig("img/piezo/p004.jpg","Piezoelektrični diskovi (senzori/zujalice).")],
+    "Zanimljivost — bio harvester":[_fig("img/piezo/p007.jpg","Harvester od kore luka — fleksibilan i biokompatibilan.")]
+  },
+  qtc:{
+    "Princip rada":[_fig("img/qtc/p003.jpg","QTC vs običan kompozit; mikroskopski snimak strukture."),_fig("img/qtc/p006.jpg","Tunelovanje elektrona između metalnih čestica pod pritiskom.")],
+    "Karakteristika i primene":[_fig("img/qtc/p007.jpg","Otpornost–sila: režim prekidača i režim senzora.")]
+  },
+  sma:{
+    "Dve faze (ključ svega)":[_fig("img/sma/p002.jpg","Austenit — NiTi kristalna rešetka (faza visoke T).")],
+    "Kako radi pamćenje oblika":[_fig("img/sma/p005.jpg","Ciklus: hlađenje → deformacija → grejanje → povratak oblika.")],
+    "Primene":[_fig("img/sma/p010.jpg","Stent (angioplastika) — veličina u odnosu na šibicu."),_fig("img/sma/p012.jpg","Pločica koja pamti oblik za spajanje kosti.")]
+  },
+  sol:{
+    "Princip rada (p-n spoj)":[_fig("img/sol/p014.jpg","Struktura Si solarne ćelije i p-n spoj.")],
+    "I-V karakteristika":[_fig("img/sol/p010.jpg","I-V karakteristika: Voc, Isc i tačka maksimalne snage.")],
+    "Sistemi (array)":[_fig("img/sol/p017.jpg","Sistem: paneli, kontroler, baterije, inverter."),_fig("img/sol/p018.jpg","Primene: kalkulatori, sateliti, daljinsko napajanje.")]
+  },
+  term:{
+    "Šta su termistori":[_fig("img/term/p003.jpg","Struktura NTC termistora sa tankim filmom (PdAg/Alumina).")],
+    "Princip merenja (RC metoda)":[_fig("img/term/p006.jpg","Punjenje/pražnjenje C — meri se vreme do 0,25·Vcc.")],
+    "Primene":[_fig("img/term/p011.jpg","Termistori u automobilu/EV (baterija, klima, LED).")]
+  },
+  var:{
+    "Šta je varistor":[_fig("img/var/p002.jpg","Tipovi varistora (disk, štap, ZnO).")],
+    "Mehanizam (ZnO struktura)":[_fig("img/var/p006.jpg","Zrnasta ZnO struktura — granice zrna kao mikro-diode.")],
+    "Statička (I-V) karakteristika":[_fig("img/var/p008.jpg","Nelinearna simetrična I-V (ZnO vs SiC).")]
+  }
+};
+TOPICS.forEach(t=>{ if(FIGS[t.id]) t.figures=FIGS[t.id]; });

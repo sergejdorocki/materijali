@@ -171,6 +171,13 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:26px 0}
 .lb-bar button:hover{background:rgba(255,255,255,.25)}
 .lb-info{min-width:90px;text-align:center}
 
+/* ---------- Inline figure (slika u lekciji) ---------- */
+figure.figure{margin:16px auto;text-align:center;max-width:560px}
+figure.figure img{max-width:100%;border:1px solid var(--border);border-radius:10px;
+  background:#fff;cursor:zoom-in;transition:.15s}
+figure.figure img:hover{border-color:var(--accent);box-shadow:var(--shadow)}
+figure.figure figcaption{font-size:.8rem;color:var(--muted);margin-top:6px}
+
 @media(max-width:860px){
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:none}
@@ -281,9 +288,9 @@ function galleryBlock(t){
     <div class="gallery" data-gallery="${t.id}">${thumbs}</div></div>`;
 }
 function topicSection(t){
-  const facts = (t.numbers||[]).map(([k,v])=>`<div class="fact"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
+  const facts = (t.numbers||[]).map(n=>{const k=Array.isArray(n)?n[0]:(n.name||n.label||n.k||''),v=Array.isArray(n)?n[1]:(n.value||n.v||'');return `<div class="fact"><div class="k">${k}</div><div class="v">${v}</div></div>`;}).join('');
   const forms = (t.formulas||[]).map(f=>`<div class="fbox"><div class="fname">${f.name}</div><div class="feq">$$${f.formula}$$</div><div class="fdesc">${f.desc}</div></div>`).join('');
-  const blocks = t.sections.map(s=>`<div class="block"><h3>${s.h}</h3>${s.html}</div>`).join('');
+  const blocks = t.sections.map(s=>{const h=s.h||s.title||s.name||s.naslov||'';const body=s.html||s.desc||s.content||s.text||'';const figs=(t.figures&&t.figures[h])?[].concat(t.figures[h]).join(''):'';return `<div class="block"><h3>${h}</h3>${body}${figs}</div>`;}).join('');
   return `<section class="topic" id="t-${t.id}">
     <div class="topic-head"><div class="ic">${t.icon}</div>
       <div><h2>${t.title}</h2><div class="sub">${t.subtitle}</div></div></div>
@@ -331,7 +338,7 @@ function formuleSection(){
   const rows=TOPICS.filter(t=>t.formulas&&t.formulas.length).map(t=>{
     const f=t.formulas.map(x=>`<div class="fbox"><div class="fname">${x.name}</div>
       <div class="feq">$$${x.formula}$$</div><div class="fdesc">${x.desc}</div></div>`).join('');
-    const n=(t.numbers||[]).map(([k,v])=>`<span class="tag">${k}: <b>${v}</b></span>`).join('');
+    const n=(t.numbers||[]).map(x=>{const k=Array.isArray(x)?x[0]:(x.name||x.label||x.k||''),v=Array.isArray(x)?x[1]:(x.value||x.v||'');return `<span class="tag">${k}: <b>${v}</b></span>`;}).join('');
     return `<div class="block"><h3>${t.icon} ${t.title}</h3>${f}
       ${n?`<div style="margin-top:10px">${n}</div>`:''}</div>`;
   }).join('');
@@ -534,6 +541,8 @@ function lbShow(){lbImg.src=lbList[lbIdx];lbInfo.textContent=(lbIdx+1)+' / '+lbL
 function lbClose(){lightbox.classList.remove('show');lbImg.src='';}
 function lbStep(d){if(!lbList.length)return;lbIdx=(lbIdx+d+lbList.length)%lbList.length;lbShow();}
 document.addEventListener('click',e=>{
+  const fig=e.target.closest('figure.figure img');
+  if(fig){lbList=[fig.src];lbIdx=0;lbShow();return;}
   const th=e.target.closest('.thumb');
   if(th){const gal=th.closest('.gallery');
     lbList=$$('.thumb',gal).map(x=>x.src);lbIdx=+th.dataset.idx||0;lbShow();}
