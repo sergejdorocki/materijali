@@ -1,3 +1,11 @@
+const SITE = {
+  id: "materijali",
+  title: "\u{1F4DA} Materijali u elektronici",
+  subtitle: "Sajt za u\u010denje \u00b7 2026",
+  heroTitle: "\u{1F4DA} Materijali u elektronici",
+  heroText: "Sa\u017eeti i jasni materijali iz <b>10 oblasti</b> \u2014 lekcije, formule, slajdovi, kartice i kviz."
+};
+
 /* ===========================================================================
    PODACI ZA UČENJE — Materijali u elektronici (2026)
    Sav sadržaj na jednom mestu: lekcije, formule, kartice, kviz.
@@ -61,8 +69,8 @@ const TOPICS = [
       <p>Izvori nisu uvek dostupni: solarne ćelije noću ne rade, piezo nema kretanja u miru, TEG nema uvek gradijent. Zato je potrebno pouzdano čuvanje (Li-ion/Li-polimer, solid-state tankoslojne baterije, superkondenzatori).</p>` },
   ],
   formulas: [
-    { name: "Talasna dužina (RF)", formula: "λ = c / f", desc: "c = brzina svetlosti, f = frekvencija. Za RF harvesting antene." },
-    { name: "Seebeck (TEG)", formula: "V = S · ΔT", desc: "S = Seebeck koef.; telo daje ~50–100 mV po °C." },
+    { name: "Talasna dužina (RF)", formula: "\\lambda = \\dfrac{c}{f}", desc: "c = brzina svetlosti, f = frekvencija. Za RF harvesting antene." },
+    { name: "Seebeck (TEG)", formula: "V = S \\cdot \\Delta T", desc: "S = Seebeck koef.; telo daje ~50–100 mV po °C." },
   ],
   numbers: [
     ["Efikasnost piezo konverzije", "≈ 90 %"],
@@ -117,7 +125,7 @@ const TOPICS = [
       <p>Koraci: <b>Dizajn → Štampa Ag elektroda → Priprema rezistivnog sloja → Spajanje i izvlačenje kontakata.</b></p>` },
     { h: "Vezivanje u kolo", html: `
       <p>Osnovno: <b>razdelnik napona + jedinični pojačavač (bafer)</b>. R<sub>M</sub> (merni otpornik) bira se da maksimizuje osetljivost i ograniči struju.</p>
-      <p class="formula-inline">V<sub>OUT</sub> = V⁺ / (1 + R<sub>FSR</sub>/R<sub>M</sub>)</p>
+      <p class="formula-inline">$V_{OUT} = \\dfrac{V^{+}}{1 + R_{FSR}/R_{M}}$</p>
       <p>Izlazni napon je <b>direktno srazmeran sili</b> (jer R<sub>FSR</sub> opada sa silom → V<sub>OUT</sub> raste).</p>` },
     { h: "Prednosti i mane", html: `
       <div class="proscons">
@@ -144,8 +152,8 @@ const TOPICS = [
       <p>Proizvođači: Interlink Electronics, IEE, Tekscan.</p>` },
   ],
   formulas: [
-    { name: "Izlazni napon FSR razdelnika", formula: "V_OUT = V⁺ / (1 + R_FSR / R_M)", desc: "R_M = merni otpornik; V_OUT raste sa silom jer R_FSR opada." },
-    { name: "Osnovno pravilo", formula: "R_FSR ∝ 1 / F", desc: "Otpornost obrnuto proporcionalna sili." },
+    { name: "Izlazni napon FSR razdelnika", formula: "V_{OUT} = \\dfrac{V^{+}}{1 + R_{FSR}/R_{M}}", desc: "R_M = merni otpornik; V_OUT raste sa silom jer R_FSR opada." },
+    { name: "Osnovno pravilo", formula: "R_{FSR} \\propto \\dfrac{1}{F}", desc: "Otpornost obrnuto proporcionalna sili." },
   ],
   numbers: [
     ["Tačnost / ponovljivost", "±15 % – ±25 %"],
@@ -223,9 +231,9 @@ const TOPICS = [
       </ul>` },
   ],
   formulas: [
-    { name: "Linearni materijal", formula: "B = μ·H ,  μ = μ₀·μ_r", desc: "μ_r = relativna permeabilnost, μ₀ = permeabilnost vakuuma." },
-    { name: "Magnetizacija", formula: "B = μ₀·(H + M) ,  μ_r = 1 + χ_m", desc: "M = magnetizacija, χ_m = magnetna susceptibilnost." },
-    { name: "Energetski proizvod", formula: "(BH)_max", desc: "Glavni parametar tvrdih materijala (2. kvadrant B–H)." },
+    { name: "Linearni materijal", formula: "B = \\mu H, \\quad \\mu = \\mu_0\\,\\mu_r", desc: "μ_r = relativna permeabilnost, μ₀ = permeabilnost vakuuma." },
+    { name: "Magnetizacija", formula: "B = \\mu_0(H + M), \\quad \\mu_r = 1 + \\chi_m", desc: "M = magnetizacija, χ_m = magnetna susceptibilnost." },
+    { name: "Energetski proizvod", formula: "(BH)_{\\mathrm{max}}", desc: "Glavni parametar tvrdih materijala (2. kvadrant B–H)." },
   ],
   numbers: [
     ["Veličina domena", "0,1 – 1 µm"],
@@ -329,7 +337,7 @@ const TOPICS = [
       <p>Primeri: DIP, PGA, SOP, BGA, PLCC, QFP, CLCC.</p>` },
   ],
   formulas: [
-    { name: "Jedinica mil", formula: "1 mil = 0,001 in = 0,0254 mm", desc: "Korak pinova: DIP=100 mil, TSOP=25 mil." },
+    { name: "Jedinica mil", formula: "1\\,\\text{mil} = 0{,}001\\,\\text{in} = 0{,}0254\\,\\text{mm}", desc: "Korak pinova: DIP=100 mil, TSOP=25 mil." },
   ],
   numbers: [
     ["DIP korak", "100 mil (2,54 mm)"],
@@ -390,8 +398,8 @@ const TOPICS = [
       <p>Razvijen fleksibilan, biokompatibilan, netoksičan, jeftin tekstilni harvester (čak i od kore luka) gustine snage ~7 µW/cm² — idealan za nosivu (wearable) elektroniku i smart odeću.</p>` },
   ],
   formulas: [
-    { name: "Generisano naelektrisanje", formula: "Q = d · F", desc: "d = piezoelektrični koeficijent, F = sila. Q ∝ sili." },
-    { name: "Osnovni odnos", formula: "Q ∝ F  →  V ∝ F", desc: "Naelektrisanje i napon srazmerni primenjenoj sili." },
+    { name: "Generisano naelektrisanje", formula: "Q = d \\cdot F", desc: "d = piezoelektrični koeficijent, F = sila. Q ∝ sili." },
+    { name: "Osnovni odnos", formula: "Q \\propto F \\;\\Rightarrow\\; V \\propto F", desc: "Naelektrisanje i napon srazmerni primenjenoj sili." },
   ],
   numbers: [
     ["Prirodni piezo", "kvarc, turmalin"],
@@ -448,7 +456,7 @@ const TOPICS = [
       </ul>` },
   ],
   formulas: [
-    { name: "Ponašanje", formula: "R(p): TeraΩ (p=0)  →  kΩ i niže (p↑)", desc: "Pritisak → eksponencijalni pad otpornosti (tunelovanje)." },
+    { name: "Ponašanje", formula: "R(p):\\ T\\Omega\\;(p=0)\\ \\rightarrow\\ k\\Omega\\ (p\\!\\uparrow)", desc: "Pritisak → eksponencijalni pad otpornosti (tunelovanje)." },
   ],
   numbers: [
     ["Otkriće", "1997, David Lussey, Peratech"],
@@ -525,8 +533,8 @@ const TOPICS = [
       <p>SMA sonde u RF ablaciji tumora: naizmenična struja visoke frekvencije (<b>460 kHz</b>) kroz sonde greje i uklanja tkivo. „Kišobran" sonde (npr. RITA Model 30, 4 kraka, do 30 mm) sa <b>NTC termistorom</b> na vrhovima. Bipolarna ablacija pokriva veću oblast od monopolarne.</p>` },
   ],
   formulas: [
-    { name: "Transformacione temperature", formula: "M_s, M_f (martenzit)  /  A_s, A_f (austenit)", desc: "Start/finish temperature hlađenja i grejanja." },
-    { name: "Aktivacija žice u robotu", formula: "I → Joule-ovo grejanje → austenit (povratak oblika)", desc: "Struja greje žicu iznad temperature transformacije." },
+    { name: "Transformacione temperature", formula: "M_s,\\,M_f\\ (\\text{martenzit}) \\;/\\; A_s,\\,A_f\\ (\\text{austenit})", desc: "Start/finish temperature hlađenja i grejanja." },
+    { name: "Aktivacija žice u robotu", formula: "I \\rightarrow \\text{Joule grejanje} \\rightarrow \\text{austenit (oblik)}", desc: "Struja greje žicu iznad temperature transformacije." },
   ],
   numbers: [
     ["Glavna legura", "NiTi (≈50/50)"],
@@ -603,9 +611,9 @@ const TOPICS = [
       </ul>` },
   ],
   formulas: [
-    { name: "I-V karakteristika ćelije", formula: "I = I_L − I₀·(exp(qV/nkT) − 1)", desc: "I_L = fotostruja, I₀ = struja zasićenja diode, n = faktor idealnosti." },
-    { name: "Fill Factor", formula: "FF = (V_mp·I_mp) / (V_OC·I_SC)", desc: "Mera 'kvadratnosti' I-V krive (0–1)." },
-    { name: "Efikasnost", formula: "η = P_max / P_in = (FF·V_OC·I_SC) / P_in", desc: "Odnos maksimalne električne snage i upadne svetlosne snage." },
+    { name: "I-V karakteristika ćelije", formula: "I = I_L - I_0\\left(e^{qV/nkT} - 1\\right)", desc: "I_L = fotostruja, I₀ = struja zasićenja diode, n = faktor idealnosti." },
+    { name: "Fill Factor", formula: "FF = \\dfrac{V_{mp}\\,I_{mp}}{V_{OC}\\,I_{SC}}", desc: "Mera 'kvadratnosti' I-V krive (0–1)." },
+    { name: "Efikasnost", formula: "\\eta = \\dfrac{P_{\\mathrm{max}}}{P_{in}} = \\dfrac{FF \\cdot V_{OC} \\cdot I_{SC}}{P_{in}}", desc: "Odnos maksimalne električne snage i upadne svetlosne snage." },
   ],
   numbers: [
     ["Monokristalni Si", "~24 %"],
@@ -668,10 +676,10 @@ const TOPICS = [
       </ul>` },
   ],
   formulas: [
-    { name: "Beta (B) jednačina NTC", formula: "R_T = R₀ · exp[ B·(1/T − 1/T₀) ]", desc: "T u kelvinima; R₀ pri referentnoj T₀; B = beta konstanta." },
-    { name: "Temperaturni koeficijent", formula: "α = (1/R)·(dR/dT) = −B / T²", desc: "Za NTC negativan; meri relativnu promenu R po stepenu." },
-    { name: "Steinhart–Hart", formula: "1/T = A + B·lnR + C·(lnR)³", desc: "Najtačniji model otpornost↔temperatura." },
-    { name: "RC merenje", formula: "T_vreme = R·C·ln(V_CC/(V_CC−V_prag))", desc: "Vreme punjenja ∝ otpornosti → odredi R_sens (prag 0,25·V_CC)." },
+    { name: "Beta (B) jednačina NTC", formula: "R_T = R_0\\, e^{\\,B\\left(\\frac{1}{T} - \\frac{1}{T_0}\\right)}", desc: "T u kelvinima; R₀ pri referentnoj T₀; B = beta konstanta." },
+    { name: "Temperaturni koeficijent", formula: "\\alpha = \\dfrac{1}{R}\\dfrac{dR}{dT} = -\\dfrac{B}{T^{2}}", desc: "Za NTC negativan; meri relativnu promenu R po stepenu." },
+    { name: "Steinhart–Hart", formula: "\\dfrac{1}{T} = A + B\\ln R + C(\\ln R)^{3}", desc: "Najtačniji model otpornost↔temperatura." },
+    { name: "RC merenje", formula: "t = RC\\,\\ln\\!\\left(\\dfrac{V_{CC}}{V_{CC}-V_{prag}}\\right)", desc: "Vreme punjenja ∝ otpornosti → odredi R_sens (prag 0,25·V_CC)." },
   ],
   numbers: [
     ["NTC koeficijent", "negativan (R↓ kad T↑)"],
@@ -725,7 +733,7 @@ const TOPICS = [
         <li>Mnogo zrna serijski/paralelno → makroskopski jako <b>nelinearna I-V</b> karakteristika.</li>
       </ul>` },
     { h: "Statička (I-V) karakteristika", html: `
-      <p>Vrlo nelinearna i simetrična: <span class="formula-inline">I = K·V^α</span>, gde je <b>α (koeficijent nelinearnosti)</b> vrlo visok (kod ZnO α ≈ 25–50; idealan otpornik bi imao α=1). Veći α = oštrije „obaranje" napona.</p>` },
+      <p>Vrlo nelinearna i simetrična: <span class="formula-inline">$I = K \\cdot V^{\\alpha}$</span>, gde je <b>α (koeficijent nelinearnosti)</b> vrlo visok (kod ZnO α ≈ 25–50; idealan otpornik bi imao α=1). Veći α = oštrije „obaranje" napona.</p>` },
     { h: "Ključni parametri", html: `
       <ul>
         <li><b>Napon varistora V<sub>1mA</sub></b> — napon pri struji 1 mA (definiše prag).</li>
@@ -741,8 +749,8 @@ const TOPICS = [
       </ul>` },
   ],
   formulas: [
-    { name: "I-V karakteristika varistora", formula: "I = K · V^α", desc: "α = koeficijent nelinearnosti (ZnO: α ≈ 25–50). Veći α → oštrije clamping ponašanje." },
-    { name: "Napon varistora", formula: "V_1mA  (napon pri I = 1 mA)", desc: "Referentni parametar praga provođenja." },
+    { name: "I-V karakteristika varistora", formula: "I = K \\cdot V^{\\alpha}", desc: "α = koeficijent nelinearnosti (ZnO: α ≈ 25–50). Veći α → oštrije clamping ponašanje." },
+    { name: "Napon varistora", formula: "V_{1\\text{mA}} \\quad (\\text{napon pri } I = 1\\,\\text{mA})", desc: "Referentni parametar praga provođenja." },
   ],
   numbers: [
     ["Tip (najčešći)", "MOV — ZnO"],
@@ -768,3 +776,10 @@ const TOPICS = [
   ],
 },
 ];
+
+
+/* Slajdovi predavanja (galerija) — generisano */
+const SLIDE_SLUG = {eh:"energyharvesting-2026",fsr:"fsr2026",mag:"magnetskimaterijali2026",kuc:"materijalizakucista2026",piezo:"piezoelektrici-2026",qtc:"qtc-2026",sma:"sma-2026",sol:"solarne-celije-2026",term:"termistori-2026",var:"varistori-2026"};
+const SLIDE_COUNT = {eh:59,fsr:37,mag:21,kuc:25,piezo:8,qtc:15,sma:25,sol:32,term:12,var:20};
+TOPICS.forEach(t=>{const s=SLIDE_SLUG[t.id],n=SLIDE_COUNT[t.id];
+  if(s&&n)t.slides=Array.from({length:n},(_,i)=>`slides/${s}/p${String(i+1).padStart(3,"0")}.jpg`);});
