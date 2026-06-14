@@ -1,0 +1,49 @@
+==========================================================
+  SAJT ZA UČENJE — Materijali u elektronici (2026)
+==========================================================
+
+KAKO DA OTVORIŠ:
+  -> Dva puta klikni na "index.html"
+     (otvara se u tvom internet pregledaču — Chrome, Edge...)
+
+  Radi POTPUNO OFFLINE — ne treba internet.
+
+----------------------------------------------------------
+ŠTA SVE IMA UNUTRA:
+----------------------------------------------------------
+  10 LEKCIJA (sve oblasti iz PDF-ova):
+    1. Energy Harvesting (prikupljanje energije)
+    2. FSR senzori sile
+    3. Magnetski materijali
+    4. Materijali za kućišta (pakovanje)
+    5. Piezoelektrici
+    6. QTC (kvantno tunelovanje)
+    7. SMA (legure koje pamte oblik)
+    8. Solarne ćelije
+    9. Termistori
+   10. Varistori
+
+  Svaka lekcija ima:
+    - "U jednoj rečenici" sažetak
+    - jasno objašnjene celine + tabele
+    - formule i ključne brojeve
+    - brze kartice (flashcards)
+    - mini kviz za samoproveru
+
+  ALATI ZA UČENJE (u meniju levo):
+    - SKRIPTA — sve formule na jednom mestu
+        (klikni "Štampaj" gore desno za PDF/papir)
+    - KARTICE — aktivno prisećanje (mešanje, strelice)
+    - VELIKI KVIZ — 20 nasumičnih pitanja iz svih oblasti
+
+----------------------------------------------------------
+KORISNI TRIKOVI:
+----------------------------------------------------------
+  - Pretraga gore (lupa): ukucaj pojam i odvodi te do njega
+  - "Označi kao naučeno" čuva napredak (vidi se 0/10 gore)
+  - Dugme Mesec/Sunce = svetla/tamna tema
+  - Na karticama: SPACE = okreni, strelice = sledeća/nazad
+
+  Napredak i tema se pamte u pregledaču (na ovom računaru).
+
+Srećno na ispitu! 🎓

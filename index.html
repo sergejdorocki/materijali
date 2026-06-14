@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Materijali u elektronici — Sajt za učenje 2026</title>
+<style>
+:root{
+  --bg:#0f172a; --bg2:#1e293b; --card:#1e293b; --card2:#273449;
+  --text:#e2e8f0; --muted:#94a3b8; --border:#334155;
+  --accent:#38bdf8; --accent2:#0ea5e9; --good:#22c55e; --bad:#ef4444;
+  --shadow:0 4px 20px rgba(0,0,0,.35);
+}
+[data-theme="light"]{
+  --bg:#f1f5f9; --bg2:#ffffff; --card:#ffffff; --card2:#f8fafc;
+  --text:#0f172a; --muted:#475569; --border:#e2e8f0;
+  --accent:#0284c7; --accent2:#0369a1; --shadow:0 4px 20px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+
+/* ---------- Layout ---------- */
+.app{display:flex;min-height:100vh}
+.sidebar{width:270px;background:var(--bg2);border-right:1px solid var(--border);
+  position:fixed;top:0;left:0;bottom:0;overflow-y:auto;padding:18px 0;z-index:50;
+  transition:transform .25s}
+.brand{padding:0 20px 14px;border-bottom:1px solid var(--border);margin-bottom:10px}
+.brand h1{font-size:1.05rem;margin:0 0 2px}
+.brand p{font-size:.75rem;color:var(--muted);margin:0}
+.nav a{display:flex;align-items:center;gap:10px;padding:9px 20px;color:var(--text);
+  text-decoration:none;font-size:.92rem;border-left:3px solid transparent;transition:.15s}
+.nav a:hover{background:var(--card2)}
+.nav a.active{background:var(--card2);border-left-color:var(--accent);color:var(--accent);font-weight:600}
+.nav a .ic{font-size:1.15rem;width:24px;text-align:center}
+.nav .sec-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);padding:14px 20px 6px;font-weight:700}
+.nav a .dot{margin-left:auto;width:9px;height:9px;border-radius:50%;background:transparent;border:1.5px solid var(--border)}
+.nav a.done .dot{background:var(--good);border-color:var(--good)}
+
+.main{flex:1;margin-left:270px;padding:0}
+.topbar{position:sticky;top:0;background:color-mix(in srgb,var(--bg) 85%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--border);
+  padding:12px 28px;display:flex;align-items:center;gap:14px;z-index:40}
+.topbar .menu-btn{display:none;background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer}
+.search{flex:1;max-width:420px;position:relative}
+.search input{width:100%;padding:9px 14px 9px 36px;border-radius:10px;border:1px solid var(--border);
+  background:var(--card);color:var(--text);font-size:.9rem}
+.search::before{content:"🔍";position:absolute;left:11px;top:8px;opacity:.6}
+.btn{background:var(--card);border:1px solid var(--border);color:var(--text);
+  padding:8px 14px;border-radius:10px;cursor:pointer;font-size:.85rem;white-space:nowrap;transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#04222f;border-color:var(--accent);font-weight:600}
+.progress-mini{font-size:.8rem;color:var(--muted)}
+
+.content{padding:28px;max-width:920px;margin:0 auto}
+section.topic{display:none;animation:fade .3s}
+section.topic.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- Home ---------- */
+.hero{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);
+  border-radius:18px;padding:30px;margin-bottom:24px}
+.hero h2{margin:0 0 8px;font-size:1.7rem}
+.hero p{color:var(--muted);margin:0 0 4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:8px}
+.tcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;
+  cursor:pointer;transition:.18s;position:relative;overflow:hidden}
+.tcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--accent)}
+.tcard .ic{font-size:1.8rem}
+.tcard h3{margin:8px 0 3px;font-size:1rem}
+.tcard p{margin:0;font-size:.78rem;color:var(--muted)}
+.tcard .bar{position:absolute;left:0;top:0;bottom:0;width:5px}
+
+/* ---------- Topic content ---------- */
+.topic-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:6px}
+.topic-head .ic{font-size:2.4rem}
+.topic-head h2{margin:0;font-size:1.65rem}
+.topic-head .sub{color:var(--muted);font-size:.9rem}
+.oneliner{background:var(--card2);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;
+  padding:14px 18px;margin:14px 0 22px;font-size:1.02rem}
+.oneliner b{color:var(--accent)}
+
+.block{background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:18px 22px;margin-bottom:16px}
+.block h3{margin:0 0 10px;font-size:1.12rem;display:flex;align-items:center;gap:8px}
+.block h3::before{content:"▸";color:var(--accent)}
+.block ul,.block ol{margin:6px 0;padding-left:22px}
+.block li{margin:4px 0}
+.block table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.9rem}
+.block th,.block td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+.block th{background:var(--card2);font-weight:600}
+.formula-inline{display:inline-block;background:var(--card2);padding:3px 10px;border-radius:6px;
+  font-family:'Cascadia Code','Consolas',monospace;color:var(--accent)}
+.proscons{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+.proscons .pros{background:color-mix(in srgb,var(--good) 12%,transparent);border-radius:10px;padding:10px 14px}
+.proscons .cons{background:color-mix(in srgb,var(--bad) 12%,transparent);border-radius:10px;padding:10px 14px}
+@media(max-width:560px){.proscons{grid-template-columns:1fr}}
+
+/* key facts / formulas */
+.facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.fact{background:var(--card2);border-radius:10px;padding:10px 12px}
+.fact .k{font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+.fact .v{font-size:1.05rem;font-weight:700;color:var(--accent)}
+.fbox{background:var(--card2);border-radius:10px;padding:14px 16px;margin:8px 0;border:1px solid var(--border)}
+.fbox .fname{font-size:.8rem;color:var(--muted);margin-bottom:4px}
+.fbox .feq{font-family:'Cascadia Code','Consolas',monospace;font-size:1.12rem;color:var(--accent);font-weight:600}
+.fbox .fdesc{font-size:.82rem;color:var(--muted);margin-top:6px}
+
+/* ---------- Flashcards ---------- */
+.flash-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+.flashcard{width:100%;max-width:560px;height:230px;perspective:1200px;cursor:pointer}
+.flashcard .inner{position:relative;width:100%;height:100%;transition:transform .55s;
+  transform-style:preserve-3d}
+.flashcard.flipped .inner{transform:rotateY(180deg)}
+.flashcard .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;
+  padding:26px;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;border:1px solid var(--border);box-shadow:var(--shadow)}
+.flashcard .front{background:var(--card)}
+.flashcard .back{background:var(--card2);transform:rotateY(180deg)}
+.flashcard .lbl{position:absolute;top:14px;left:18px;font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--muted)}
+.flashcard .q{font-size:1.2rem;font-weight:600}
+.flashcard .a{font-size:1.02rem}
+.flash-ctrl{display:flex;gap:10px;align-items:center}
+.flash-count{color:var(--muted);font-size:.85rem;min-width:60px;text-align:center}
+
+/* ---------- Quiz ---------- */
+.quiz-q{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+.quiz-q .qt{font-weight:600;margin-bottom:12px}
+.opt{display:block;width:100%;text-align:left;background:var(--card2);border:1px solid var(--border);
+  color:var(--text);padding:11px 14px;border-radius:10px;margin:7px 0;cursor:pointer;transition:.12s;font-size:.92rem}
+.opt:hover{border-color:var(--accent)}
+.opt.correct{background:color-mix(in srgb,var(--good) 22%,transparent);border-color:var(--good)}
+.opt.wrong{background:color-mix(in srgb,var(--bad) 22%,transparent);border-color:var(--bad)}
+.opt.disabled{cursor:default;pointer-events:none}
+.quiz-result{font-size:1.3rem;font-weight:700;text-align:center;padding:18px;border-radius:14px;
+  background:var(--card2);margin-bottom:16px}
+
+/* ---------- Misc ---------- */
+.mark-done{display:flex;align-items:center;gap:10px;margin:24px 0;padding:14px 18px;
+  background:var(--card2);border-radius:12px;border:1px solid var(--border)}
+.mark-done input{width:20px;height:20px;accent-color:var(--good)}
+.pager{display:flex;justify-content:space-between;margin-top:20px;gap:10px}
+.tag{display:inline-block;background:var(--card2);border:1px solid var(--border);border-radius:20px;
+  padding:4px 12px;font-size:.78rem;margin:3px 4px 3px 0}
+.bigbtns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+hr.sep{border:none;border-top:1px solid var(--border);margin:26px 0}
+.note{font-size:.85rem;color:var(--muted)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:45}
+
+@media(max-width:860px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:none}
+  .main{margin-left:0}
+  .topbar .menu-btn{display:block}
+  .overlay.show{display:block}
+}
+@media print{
+  .sidebar,.topbar,.no-print{display:none!important}
+  .main{margin:0}
+  section.topic{display:block!important;page-break-after:always}
+  .content{max-width:100%}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <h1>📚 Materijali u elektronici</h1>
+      <p>Sajt za učenje · 2026</p>
+    </div>
+    <nav class="nav" id="nav">
+      <a href="#" data-go="home" class="active"><span class="ic">🏠</span> Početna</a>
+      <div class="sec-label">Lekcije</div>
+      <!-- topic links injected -->
+      <div class="sec-label">Alati za učenje</div>
+      <a href="#" data-go="formule"><span class="ic">📐</span> Skripta — sve formule</a>
+      <a href="#" data-go="kartice"><span class="ic">🃏</span> Kartice (flashcards)</a>
+      <a href="#" data-go="kviz"><span class="ic">✅</span> Kviz (sve oblasti)</a>
+    </nav>
+  </aside>
+  <div class="overlay" id="overlay"></div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn">☰</button>
+      <div class="search"><input id="searchInput" placeholder="Pretraži pojmove, formule, primene..."></div>
+      <span class="progress-mini" id="progressMini"></span>
+      <button class="btn no-print" id="printBtn">🖨️ Štampaj</button>
+      <button class="btn no-print" id="themeBtn">🌙</button>
+    </div>
+    <div class="content" id="content"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+/* ============ STATE ============ */
+const LS_DONE='mat_done_v1', LS_THEME='mat_theme_v1';
+let done = JSON.parse(localStorage.getItem(LS_DONE)||'{}');
+const $=(s,el=document)=>el.querySelector(s);
+const $$=(s,el=document)=>[...el.querySelectorAll(s)];
+
+/* ============ THEME ============ */
+function applyTheme(t){document.documentElement.dataset.theme=t;
+  $('#themeBtn').textContent=t==='light'?'☀️':'🌙';localStorage.setItem(LS_THEME,t);}
+applyTheme(localStorage.getItem(LS_THEME)||'dark');
+$('#themeBtn').onclick=()=>applyTheme(document.documentElement.dataset.theme==='light'?'dark':'light');
+
+/* ============ NAV BUILD ============ */
+const nav=$('#nav');
+const toolsLabel=$$('.sec-label',nav)[1];
+TOPICS.forEach(t=>{
+  const a=document.createElement('a');
+  a.href='#';a.dataset.go=t.id;
+  a.innerHTML=`<span class="ic">${t.icon}</span> ${t.title}<span class="dot"></span>`;
+  nav.insertBefore(a,toolsLabel);
+});
+
+/* ============ RENDER HELPERS ============ */
+function topicSection(t){
+  const facts = (t.numbers||[]).map(([k,v])=>`<div class="fact"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
+  const forms = (t.formulas||[]).map(f=>`<div class="fbox"><div class="fname">${f.name}</div><div class="feq">${f.formula}</div><div class="fdesc">${f.desc}</div></div>`).join('');
+  const blocks = t.sections.map(s=>`<div class="block"><h3>${s.h}</h3>${s.html}</div>`).join('');
+  return `<section class="topic" id="t-${t.id}">
+    <div class="topic-head"><div class="ic">${t.icon}</div>
+      <div><h2>${t.title}</h2><div class="sub">${t.subtitle}</div></div></div>
+    <div class="oneliner">${t.oneLiner}</div>
+    ${blocks}
+    ${forms?`<div class="block"><h3>📐 Formule i konstante</h3>${forms}
+       ${facts?`<div class="facts" style="margin-top:12px">${facts}</div>`:''}</div>`:
+       (facts?`<div class="block"><h3>🔑 Ključni brojevi</h3><div class="facts">${facts}</div></div>`:'')}
+    <div class="block no-print"><h3>🃏 Brze kartice za ovu oblast</h3>
+      <div id="fc-${t.id}"></div></div>
+    <div class="block no-print"><h3>✅ Mini kviz</h3><div id="qz-${t.id}"></div></div>
+    <div class="mark-done no-print">
+      <input type="checkbox" id="done-${t.id}" ${done[t.id]?'checked':''}>
+      <label for="done-${t.id}">Označi oblast kao <b>naučenu</b></label></div>
+    <div class="pager no-print"></div>
+  </section>`;
+}
+
+/* ============ HOME ============ */
+function homeSection(){
+  const cards=TOPICS.map(t=>`<div class="tcard" data-go="${t.id}">
+    <div class="bar" style="background:${t.color}"></div>
+    <div class="ic">${t.icon}</div><h3>${t.title}</h3><p>${t.subtitle}</p></div>`).join('');
+  return `<section class="topic active" id="t-home">
+    <div class="hero">
+      <h2>👋 Dobrodošao u sajt za učenje</h2>
+      <p>Sažeti i jasni materijali iz <b>10 oblasti</b> — sa formulama, karticama i kvizom.</p>
+      <p class="note">Sve radi offline (bez interneta). Napredak se pamti u tvom pregledaču.</p>
+      <div class="bigbtns">
+        <button class="btn primary" data-go="${TOPICS[0].id}">▶ Počni od prve lekcije</button>
+        <button class="btn" data-go="formule">📐 Skripta sa formulama</button>
+        <button class="btn" data-go="kviz">✅ Veliki kviz</button>
+      </div>
+    </div>
+    <h3 style="margin:0 0 10px">Oblasti</h3>
+    <div class="grid">${cards}</div>
+  </section>`;
+}
+
+/* ============ FORMULE (SKRIPTA) ============ */
+function formuleSection(){
+  const rows=TOPICS.filter(t=>t.formulas&&t.formulas.length).map(t=>{
+    const f=t.formulas.map(x=>`<div class="fbox"><div class="fname">${x.name}</div>
+      <div class="feq">${x.formula}</div><div class="fdesc">${x.desc}</div></div>`).join('');
+    const n=(t.numbers||[]).map(([k,v])=>`<span class="tag">${k}: <b>${v}</b></span>`).join('');
+    return `<div class="block"><h3>${t.icon} ${t.title}</h3>${f}
+      ${n?`<div style="margin-top:10px">${n}</div>`:''}</div>`;
+  }).join('');
+  return `<section class="topic" id="t-formule">
+    <div class="topic-head"><div class="ic">📐</div>
+      <div><h2>Skripta — sve formule i konstante</h2>
+      <div class="sub">Sažet pregled za brzo ponavljanje · klikni 🖨️ Štampaj za PDF</div></div></div>
+    <div class="oneliner">Sve bitne formule, jednačine i karakteristični brojevi sa jednog mesta.</div>
+    ${rows}</section>`;
+}
+
+/* ============ KARTICE (ALL) ============ */
+let allCards=[];
+TOPICS.forEach(t=>(t.flashcards||[]).forEach(c=>allCards.push({...c,topic:t.title,icon:t.icon})));
+function karticeSection(){
+  return `<section class="topic" id="t-kartice">
+    <div class="topic-head"><div class="ic">🃏</div>
+      <div><h2>Kartice — aktivno prisećanje</h2>
+      <div class="sub">Pročitaj pitanje, seti se odgovora, pa klikni karticu da proveriš</div></div></div>
+    <div class="oneliner">Najbolji način za pamćenje: pokušaj da odgovoriš PRE nego što okreneš karticu.</div>
+    <div class="flash-wrap">
+      <div class="flash-ctrl"><button class="btn" id="fcShuffle">🔀 Promešaj</button>
+        <span class="flash-count" id="fcCount"></span></div>
+      <div class="flashcard" id="bigFlash"><div class="inner">
+        <div class="face front"><div class="lbl" id="fcTopic"></div><div class="q" id="fcQ"></div>
+          <div class="note" style="margin-top:14px">klikni za odgovor</div></div>
+        <div class="face back"><div class="lbl">Odgovor</div><div class="a" id="fcA"></div></div>
+      </div></div>
+      <div class="flash-ctrl">
+        <button class="btn" id="fcPrev">← Nazad</button>
+        <button class="btn primary" id="fcNext">Sledeća →</button></div>
+    </div></section>`;
+}
+
+/* per-topic mini flashcards */
+function miniFlash(t,mount){
+  let i=0;const cards=t.flashcards||[];
+  function r(){mount.innerHTML=`<div class="flash-wrap">
+    <div class="flashcard" id="mf-${t.id}"><div class="inner">
+      <div class="face front"><div class="lbl">Pitanje ${i+1}/${cards.length}</div>
+        <div class="q">${cards[i].q}</div><div class="note" style="margin-top:12px">klikni za odgovor</div></div>
+      <div class="face back"><div class="lbl">Odgovor</div><div class="a">${cards[i].a}</div></div>
+    </div></div>
+    <div class="flash-ctrl"><button class="btn" data-mf="prev">←</button>
+      <button class="btn primary" data-mf="next">Sledeća →</button></div></div>`;
+    const card=$('#mf-'+t.id,mount);
+    card.onclick=()=>card.classList.toggle('flipped');
+    $('[data-mf=next]',mount).onclick=()=>{i=(i+1)%cards.length;r();};
+    $('[data-mf=prev]',mount).onclick=()=>{i=(i-1+cards.length)%cards.length;r();};
+  }
+  r();
+}
+
+/* ============ QUIZ ============ */
+function renderQuiz(questions,mount,withResult){
+  let answered=0,score=0;
+  mount.innerHTML=questions.map((q,qi)=>`<div class="quiz-q" id="${mount.id}-q${qi}">
+    <div class="qt">${qi+1}. ${q.q}</div>
+    ${q.options.map((o,oi)=>`<button class="opt" data-q="${qi}" data-o="${oi}">${o}</button>`).join('')}
+  </div>`).join('') + (withResult?`<div class="quiz-result" id="${mount.id}-res" style="display:none"></div>`:'');
+  $$('.opt',mount).forEach(btn=>{
+    btn.onclick=()=>{
+      const qi=+btn.dataset.q,oi=+btn.dataset.o,q=questions[qi];
+      const box=$('#'+mount.id+'-q'+qi,mount);
+      if(box.dataset.done)return;
+      box.dataset.done=1;answered++;
+      $$('.opt',box).forEach(b=>{
+        b.classList.add('disabled');
+        if(+b.dataset.o===q.answer)b.classList.add('correct');
+      });
+      if(oi===q.answer)score++; else btn.classList.add('wrong');
+      if(withResult&&answered===questions.length){
+        const res=$('#'+mount.id+'-res',mount);
+        const pct=Math.round(score/questions.length*100);
+        res.style.display='block';
+        res.innerHTML=`${pct>=80?'🎉':pct>=50?'👍':'📖'} Rezultat: ${score}/${questions.length} (${pct}%)`;
+        res.scrollIntoView({behavior:'smooth',block:'center'});
+      }
+    };
+  });
+}
+function kvizSection(){
+  return `<section class="topic" id="t-kviz">
+    <div class="topic-head"><div class="ic">✅</div>
+      <div><h2>Veliki kviz — sve oblasti</h2>
+      <div class="sub">Po nekoliko pitanja iz svake oblasti · vidi rezultat na kraju</div></div></div>
+    <div class="oneliner">Proveri znanje iz svih 10 oblasti. Klikni odgovor da vidiš da li je tačan.</div>
+    <div class="bigbtns" style="margin-bottom:16px">
+      <button class="btn primary" id="quizRestart">🔄 Novi pokušaj (promešaj)</button></div>
+    <div id="bigQuiz"></div></section>`;
+}
+function buildBigQuiz(){
+  let all=[];TOPICS.forEach(t=>(t.quiz||[]).forEach(q=>all.push(q)));
+  all=shuffle(all).slice(0,20);
+  renderQuiz(all,$('#bigQuiz'),true);
+}
+
+/* ============ UTIL ============ */
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* ============ BUILD PAGE ============ */
+const content=$('#content');
+content.innerHTML = homeSection()
+  + TOPICS.map(topicSection).join('')
+  + formuleSection() + karticeSection() + kvizSection();
+
+/* wire mini flashcards + quiz + pager + done */
+TOPICS.forEach((t,idx)=>{
+  miniFlash(t,$('#fc-'+t.id));
+  renderQuiz(t.quiz||[],$('#qz-'+t.id),true);
+  // pager
+  const pager=$('#t-'+t.id+' .pager');
+  const prev=TOPICS[idx-1],next=TOPICS[idx+1];
+  pager.innerHTML=`${prev?`<button class="btn" data-go="${prev.id}">← ${prev.title}</button>`:'<span></span>'}
+    ${next?`<button class="btn primary" data-go="${next.id}">${next.title} →</button>`:`<button class="btn primary" data-go="kviz">Idi na kviz →</button>`}`;
+  // done checkbox
+  $('#done-'+t.id).onchange=e=>{done[t.id]=e.target.checked;
+    localStorage.setItem(LS_DONE,JSON.stringify(done));updateProgress();};
+});
+
+/* big flashcards */
+(function(){
+  let order=[...allCards.keys()],pos=0;
+  const bf=$('#bigFlash');
+  function show(){const c=allCards[order[pos]];
+    $('#fcTopic').textContent=c.icon+' '+c.topic;
+    $('#fcQ').textContent=c.q;$('#fcA').textContent=c.a;
+    bf.classList.remove('flipped');
+    $('#fcCount').textContent=(pos+1)+' / '+allCards.length;}
+  bf.onclick=()=>bf.classList.toggle('flipped');
+  $('#fcNext').onclick=()=>{pos=(pos+1)%order.length;show();};
+  $('#fcPrev').onclick=()=>{pos=(pos-1+order.length)%order.length;show();};
+  $('#fcShuffle').onclick=()=>{order=shuffle(order);pos=0;show();};
+  show();
+})();
+
+/* big quiz */
+buildBigQuiz();
+$('#quizRestart').onclick=buildBigQuiz;
+
+/* ============ NAVIGATION ============ */
+function go(id){
+  $$('.topic').forEach(s=>s.classList.remove('active'));
+  const sec=$('#t-'+id)||$('#t-home');
+  sec.classList.add('active');
+  $$('.nav a').forEach(a=>a.classList.toggle('active',a.dataset.go===id));
+  window.scrollTo({top:0,behavior:'instant'});
+  closeSidebar();
+}
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-go]');
+  if(el){e.preventDefault();go(el.dataset.go);}
+});
+
+/* ============ PROGRESS ============ */
+function updateProgress(){
+  const n=TOPICS.filter(t=>done[t.id]).length;
+  $('#progressMini').textContent=`📈 ${n}/${TOPICS.length} naučeno`;
+  $$('.nav a').forEach(a=>{const t=TOPICS.find(x=>x.id===a.dataset.go);
+    if(t)a.classList.toggle('done',!!done[t.id]);});
+}
+updateProgress();
+
+/* ============ SEARCH ============ */
+const searchInput=$('#searchInput');
+searchInput.addEventListener('input',()=>{
+  const q=searchInput.value.trim().toLowerCase();
+  if(!q){go(currentVisible());return;}
+  // find first topic that matches and jump highlighting
+  const hits=TOPICS.filter(t=>JSON.stringify(t).toLowerCase().includes(q));
+  if(hits.length){
+    go(hits[0].id);
+    setTimeout(()=>highlight(q),60);
+  }
+});
+function currentVisible(){const a=$('.nav a.active');return a?a.dataset.go:'home';}
+function highlight(q){
+  const sec=$('.topic.active');if(!sec)return;
+  // simple scroll to first match
+  const walker=document.createTreeWalker(sec,NodeFilter.SHOW_TEXT);
+  while(walker.nextNode()){
+    if(walker.currentNode.nodeValue.toLowerCase().includes(q)){
+      const el=walker.currentNode.parentElement;
+      el.scrollIntoView({behavior:'smooth',block:'center'});
+      el.style.transition='background .3s';const o=el.style.background;
+      el.style.background='color-mix(in srgb,var(--accent) 25%,transparent)';
+      setTimeout(()=>el.style.background=o,1200);break;
+    }
+  }
+}
+
+/* ============ MOBILE SIDEBAR ============ */
+function closeSidebar(){$('#sidebar').classList.remove('open');$('#overlay').classList.remove('show');}
+$('#menuBtn').onclick=()=>{$('#sidebar').classList.toggle('open');$('#overlay').classList.toggle('show');};
+$('#overlay').onclick=closeSidebar;
+
+/* ============ PRINT (formule by default) ============ */
+$('#printBtn').onclick=()=>window.print();
+
+/* keyboard: arrows for flashcards when on kartice */
+document.addEventListener('keydown',e=>{
+  if(currentVisible()==='kartice'){
+    if(e.key==='ArrowRight')$('#fcNext').click();
+    if(e.key==='ArrowLeft')$('#fcPrev').click();
+    if(e.key===' '){e.preventDefault();$('#bigFlash').click();}
+  }
+});
+</script>
+</body>
+</html>
